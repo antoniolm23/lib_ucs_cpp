@@ -1,0 +1,74 @@
+@startuml
+
+actor PEP
+participant CH
+participant MSG_BUS
+participant PAP
+participant PIPs
+participant Evaluator
+participant UCObligation
+participant SM
+
+PEP -> CH : PEPA
+activate CH #CornflowerBlue
+CH -> MSG_BUS : send(newSession)
+deactivate CH
+activate MSG_BUS #DarkYellow
+MSG_BUS -> SM : notify(startSession)
+activate SM #DeepSkyBlue
+SM -> MSG_BUS : send(sessionId)
+deactivate SM
+
+MSG_BUS -> PAP : notify(getPolicy)
+activate PAP #DarkSeaGreen
+PAP -> MSG_BUS : send(policyAndAttributes)
+deactivate PAP
+
+loop policy_attempts
+MSG_BUS -> PIPs : notify(enrichRequest(request, sessionId))
+activate PIPs #DarkOrange
+PIPs -> MSG_BUS : send(enrichedRequest)
+deactivate PIPs
+
+MSG_BUS -> Evaluator : notify(evaluate)
+activate Evaluator #FireBrick
+Evaluator -> MSG_BUS : send(evaluation)
+deactivate Evaluator
+
+
+MSG_BUS -> SM : notify(updateSession)
+activate SM #DeepSkyBlue
+SM -> MSG_BUS : send(sessionUpdated)
+deactivate SM
+
+MSG_BUS -> UCObligation : notify(performObligation)
+activate UCObligation #LightSeaGreen
+UCObligation -> PIPs : updateAttributes
+activate PIPs #DarkOrange
+PIPs -> UCObligation : response
+deactivate PIPs
+deactivate UCObligation
+
+alt if evaluation is definitive
+MSG_BUS -> CH : notify(evaluation)
+activate CH #CornflowerBlue
+CH -> PEP : evaluation
+deactivate CH
+
+else 
+
+MSG_BUS -> PIPs : notify(askAdditional(sessionId))
+activate PIPs #DarkOrange
+PIPs -> MSG_BUS : send(additionalInfoArrived)
+deactivate PIPs
+end
+end
+activate CH #CornflowerBlue
+
+CH -> PEP : evaluation
+
+deactivate CH
+
+
+
+@enduml

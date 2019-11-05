@@ -1,0 +1,45 @@
+@startuml
+
+interface PolicyAdministrationPoint {
+ + get(policyId : string) : Policy
+ + get(policy : Policy) : Policy
+ + insert(policy : Policy) : bool
+ + update(policy : Policy) : bool
+ + remove(policyId : string) : bool
+ + list() : list<Policy>
+ + search(policySearchParams : PolicySearchParams) : list<Policy> 
+}
+
+interface AbacPolicyAdministrationPoint {
+ + verifySignature(policy : Policy) : bool
+}
+
+interface ConfigureFramework {
+ + configure(policyId : String);
+}
+
+class PolicySearchParams {
+}
+
+interface Storage {
+ + read(uri : string) : string
+ + write(uri : string, contents : string) : bool
+ + remove(uri : string) : bool
+ + contains(uri : string) : bool
+}
+
+PolicyAdministrationPoint <|-- BasicPolicyAdministrationPoint
+AbacPolicyAdministrationPoint <|-- BasicPolicyAdministrationPoint
+ConfigureFramework <|-- BasicPolicyAdministrationPoint
+
+class BasicPolicyAdministrationPoint {
+ - storage : Storage
+}
+
+Storage <|-- FileStorage
+
+class FileStorage {
+ - basePath : string
+}
+
+@enduml

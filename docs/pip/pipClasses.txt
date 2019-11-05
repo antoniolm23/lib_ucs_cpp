@@ -1,0 +1,16 @@
+@startuml
+
+interface PolicyInformationPoint {
+ + subscribe(request : Request, sessionId : string)
+ + unsubscribe(sessionId : string)
+}
+
+interface PolicyInformationPointConfigure {
+ + configure(evaluationResult : EvaluationResult)
+}
+
+class PIPBase {
+ - attributeId : string
+}
+
+@enduml

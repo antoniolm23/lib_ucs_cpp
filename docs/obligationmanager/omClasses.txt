@@ -1,0 +1,16 @@
+@startuml
+
+interface ObligationManager {
+ + performObligation(instruction : Instruction);
+}
+
+class PEPObligationManager {
+}
+
+class InternalObligationManager {
+}
+
+ObligationManager <|-- PEPObligationManager
+ObligationManager <|-- InternalObligationManager
+
+@enduml

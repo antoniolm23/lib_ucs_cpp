@@ -1,0 +1,35 @@
+@startuml
+
+class AttributeHeader {
+ - attributeName : string
+ - deviceId : string
+ - timestamp : long
+}
+
+class AttributeRecord {
+ - header : AttributeHeader
+ - value : string
+ - type : DATA_TYPE
+ - confidenceLevel : double
+}
+
+interface AttributeStorage {
+ + retrieve(attributeHeader : AttributeHeader) : AttributeRecord
+ + add(attributeRecord : AttributeRecord);
+ + removeAll();
+ + remove(attributeHeader : AttributeHeader)
+}
+
+interface AttributeTableManager {
+ + retrieve(AttributeHeader : attributeHeader)
+ + add(attributeRecord : AttributeRecord)
+ + deleteAll()
+}
+
+AttributeStorage<|-- MemoryAttributeStorage
+
+class MemoryAttributeStorage {
+ - records : List<AttributeRecord>
+}
+
+@enduml

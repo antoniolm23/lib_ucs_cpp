@@ -1,0 +1,51 @@
+@startuml
+
+interface Subscriber
+interface ISessionManager
+class SessionManager
+interface ISessionStorage
+class SessionStorage
+class Session
+
+ISessionManager <|-- SessionManager
+ISessionStorage <|-- SessionStorage
+Subscriber <|-- SessionManager
+SessionStorage <|-- SessionStorageDatabase
+SessionStorage <|-- SessionStorageMemory
+SessionStorage <|-- SessionStorageFile
+
+interface Subscriber {
+	boolean notify(message : Message);
+}
+
+interface ISessionManager {
+	+ startSession(session : Session);
+	+ getSession(session : Session) : Session;
+	+ deleteSession(session : Session);
+	+ policyUpdated(policyId : string);
+}
+
+class SessionManager {
+	- storage : ISessionStorage 
+}
+
+interface ISessionStorage {
+	+ generateSession(session : Session);
+	+ getSession(session : Session) : Session;
+	+ deleteSession(session : Session)
+}
+
+class Session {
+	- sessionId : string
+	- request : Request
+	- policyId : string
+	- pre_attributes : map<string, list<string>>
+	- on_going_attributes : map<string, list<string>>
+	- post_attributes : map<string, list<string>>
+}
+
+
+
+
+
+@enduml

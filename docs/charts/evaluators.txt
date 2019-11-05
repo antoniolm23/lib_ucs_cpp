@@ -1,0 +1,28 @@
+@startuml
+
+actor Evaluator
+participant MSG_BUS
+participant PDP1
+participant PDP2
+
+activate Evaluator #DarkTurquoise
+activate MSG_BUS
+Evaluator -> MSG_BUS : send(evaluate)
+deactivate Evaluator
+
+MSG_BUS -> PDP1 : notify(evaluate)
+activate PDP1 #DarkGreen
+PDP1 -> MSG_BUS : send(evaluation)
+deactivate PDP1
+
+MSG_BUS -> PDP2 : notify(evaluate)
+activate PDP2 #ForestGreen
+PDP2 -> MSG_BUS : send(evaluation)
+deactivate PDP2
+
+MSG_BUS -> Evaluator : notify(completed)
+activate Evaluator #DarkTurquoise
+deactivate Evaluator
+
+
+@enduml

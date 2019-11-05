@@ -1,0 +1,56 @@
+@startuml
+
+interface SessionManager {
+ + retrieve(session : SessionInfo) : SessionInfo
+ + update(sessionId : string, status : SESION_STATUS, evaluationStep : EVALUATION_STEP)
+ + generate(sessionInfo : sessionInfo);
+ + remove(sessionInfo : SessionInfo);
+}
+
+interface SessionStorage {
+ + add(sessionInfo : SessionInfo)
+ + retrieve(sessionInfo : SessionInfo) : SessionInfo
+ + retrieveAll() : list<SessionInfo>
+ + remove(sessionInfo : SessionInfo)
+ + removeAll()
+}
+
+enum SESSION_STATUS {
+ ON_GOING
+ EVALUATED
+ STOP
+}
+enum EVALUATION_STEP {
+ TRY 
+ START
+ END
+ REEVALUATION
+}
+
+class SessionInfo {
+ - sessionId : string
+ - request : string
+ - string : policyId
+ - string : pepId
+ - status : SESSION_STATUS
+ - step : EVALUATION_STEP
+}
+
+class Session {
+ - sessionInfo : SessionInfo
+ - request : Request
+ - policy : Policy
+}
+
+class BasicSessionManager {
+ - sessionStorage : SessionStorage
+} 
+
+class MemorySessionStorage {
+ - sessionInfos : list<SessionInfo>
+}
+
+SessionStorage <|-- MemorySessionStorage
+SessionManager <|-- BasicSessionManager
+
+@enduml

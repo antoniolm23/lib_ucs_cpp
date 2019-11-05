@@ -1,0 +1,69 @@
+@startuml
+
+actor PEP
+participant CH
+participant PAP
+participant PIPs
+participant Evaluator
+participant UCObligation
+participant SM
+
+PEP -> CH : PEPA
+activate CH #CornflowerBlue
+CH -> PAP : getPolicy
+activate PAP #DarkSeaGreen
+PAP -> CH : policyAndAttributes
+deactivate PAP
+
+CH -> SM : startSession
+activate SM #DeepSkyBlue
+SM -> CH : sessionId
+deactivate SM
+
+loop policy_attempts
+activate CH #LightSkyBlue
+CH -> PIPs : enrichRequest(request, sessionId)
+activate PIPs #DarkOrange
+PIPs -> CH : enrichedRequest
+deactivate PIPs
+
+CH -> Evaluator : evaluate
+activate Evaluator #FireBrick
+Evaluator -> CH : evaluation
+deactivate Evaluator
+
+
+CH -> SM : updateSession
+activate SM #DeepSkyBlue
+SM -> CH : sessionUpdated
+deactivate SM
+
+CH -> UCObligation : performObligation
+activate UCObligation #LightSeaGreen
+UCObligation -> PIPs : updateAttributes
+activate PIPs #DarkOrange
+PIPs -> UCObligation : response
+deactivate PIPs
+UCObligation -> CH : response
+deactivate UCObligation
+
+alt if evaluation is definitive
+CH -> PEP : evaluation
+
+else 
+
+CH -> PIPs : askAdditional(sessionId)
+activate PIPs #DarkOrange
+PIPs -> CH : additionalInfoArrived()
+deactivate PIPs
+end
+end
+deactivate CH
+
+CH -> PEP : evaluation
+
+deactivate CH
+
+
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+
+participant PIPRegistry
+participant MSG_BUS
+participant PIP1
+participant PIP2
+
+activate PIPRegistry #Cyan
+PIPRegistry -> MSG_BUS : send(requiredAttributes)
+deactivate PIPRegistry
+
+MSG_BUS -> PIP1 : notify(requiredAttribute)
+activate PIP1 #Orange
+PIP1 -> MSG_BUS : send(attributeValue)
+deactivate PIP1
+
+MSG_BUS -> PIP2 : notify(requiredAttribute)
+activate PIP2 #DarkOrange
+PIP2 -> MSG_BUS : send(attributeValue)
+deactivate PIP2
+
+MSG_BUS -> PIPRegistry : notify(attributes)
+activate PIPRegistry #Cyan
+deactivate PIPRegistry
+
+
+@enduml

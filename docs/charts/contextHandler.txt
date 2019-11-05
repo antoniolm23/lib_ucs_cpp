@@ -1,0 +1,21 @@
+@startuml
+
+interface Subscriber
+interface IContextHandler
+class ContextHandler
+
+Subscriber <|-- ContextHandler
+IContextHandler <|-- ContextHandler
+
+interface IContextHandler{
+	+ tryAccess(request : Request) : Response
+	+ startAccess(sessionId : string) : Response
+	+ endAccess(sessionId : string) : Response
+	+ reeevaluate(attributeId : string) : Response
+}
+
+class ContextHandler {
+	
+}
+
+@enduml

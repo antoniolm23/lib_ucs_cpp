@@ -1,0 +1,9 @@
+@startuml
+
+interface PolicyEnforcementPoint {
+ + reevaluation(evaluationResult : EvaluationResult)
+}
+
+
+
+@enduml

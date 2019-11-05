@@ -1,0 +1,29 @@
+@startuml
+
+interface ContextHandler {
+ + tryAccess(tryAccessMessage : TryAccessMessage)
+ + startAccess(startAccessMessage : StartAccesssMessage)
+ + endAccessMessage(endAccessMessage : EndAccessMessage)
+ + reevaluation(attributeChanged : AttributeChangedMessage)
+}
+
+interface ContextEnricher {
+ + sendMessage(message : FlowMessage)
+}
+
+abstract FlowMessage {
+ - source : string
+ - destination : string
+ - sessionId : string
+ - type : string
+}
+
+ContextHandler <|-- BasicContextHandler
+ContextEnricher <|-- BasicContextHandler
+
+class BasicContextHandler {
+}
+
+
+
+@enduml

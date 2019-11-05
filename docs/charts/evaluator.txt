@@ -1,0 +1,18 @@
+@startuml
+
+interface IEvaluator
+interface Subscriber
+class Evaluator
+
+Subscriber <|-- Evaluator
+IEvaluator <|-- Evaluator
+
+interface Subscriber {
+	+ notify(message : Message) : bool
+}
+
+interface IEvaluator {
+	+ evaluate(request : Request, policy : Policy) : Result
+}
+
+@enduml
