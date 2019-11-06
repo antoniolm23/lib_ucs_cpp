@@ -3,6 +3,7 @@
 
 #include <ucs/data/Document.hpp>
 #include <string>
+#include <map>
 
 namespace ucs
 {

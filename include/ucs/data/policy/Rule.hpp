@@ -32,8 +32,8 @@ public:
     void result(RESULT_TYPE result);
     unique_ptr<Expression> &target();
     unique_ptr<Expression> &condition();
-    list<Instruction> &instructions();
-    void instructions(const list<Instruction> &instructions);
+    list<std::shared_ptr<Instruction>> &instructions();
+    void instructions(const list<std::shared_ptr<Instruction>> &instructions);
     virtual std::string const str();
     virtual list<std::string> getAttributes() = 0;
 
@@ -42,7 +42,7 @@ protected:
     RESULT_TYPE result_;
     unique_ptr<Expression> target_;
     unique_ptr<Expression> condition_;
-    list<Instruction> instructions_;
+    list<std::shared_ptr<Instruction>> instructions_;
 };
 } // namespace ucs
 

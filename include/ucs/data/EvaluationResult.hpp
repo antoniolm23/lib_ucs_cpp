@@ -17,13 +17,13 @@ public:
   void result(RESULT_TYPE result);
   std::string explanation();
   void explanation(const std::string &explanation);
-  std::list<ucs::Instruction> const &instructions();
-  void addInstruction(const ucs::Instruction &instructions);
+  std::list<std::shared_ptr<Instruction>> const &instructions();
+  void addInstruction(std::shared_ptr<ucs::Instruction> &instructions);
 
 private:
   RESULT_TYPE result_;
   std::string explanation_;
-  std::list<ucs::Instruction> instructions_;
+  std::list<std::shared_ptr<Instruction>> instructions_;
 };
 
 } // namespace ucs

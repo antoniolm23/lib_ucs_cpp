@@ -22,6 +22,7 @@ public:
     virtual void parse(const std::string &value);
     virtual void parse(std::stringstream &stream);
     virtual ~Instruction();
+    virtual const string str() = 0;
 
 protected:
     RESULT_TYPE onResult_;

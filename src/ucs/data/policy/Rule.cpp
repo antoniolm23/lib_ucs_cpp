@@ -41,12 +41,12 @@ unique_ptr<Expression> &Rule::condition()
     return condition_;
 }
 
-list<Instruction> &Rule::instructions()
+list<std::shared_ptr<Instruction>> &Rule::instructions()
 {
     return instructions_;
 }
 
-void Rule::instructions(const list<Instruction> &instructions)
+void Rule::instructions(const list<std::shared_ptr<Instruction>> &instructions)
 {
     instructions_ = instructions;
 }

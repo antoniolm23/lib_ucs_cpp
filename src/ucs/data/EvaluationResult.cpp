@@ -28,12 +28,12 @@ void EvaluationResult::explanation(const std::string &explanation)
     explanation_ = explanation;
 }
 
-const std::list<Instruction> &EvaluationResult::instructions()
+const std::list<std::shared_ptr<Instruction>> &EvaluationResult::instructions()
 {
     return instructions_;
 }
 
-void EvaluationResult::addInstruction(const Instruction &instruction)
+void EvaluationResult::addInstruction(std::shared_ptr<Instruction> &instruction)
 {
     instructions_.push_back(instruction);
 }
