@@ -8,6 +8,11 @@
 #include <ucs/data/ResultType.hpp>
 namespace ucs
 {
+enum INSTRUCTION_TYPE
+{
+    ADVICE,
+    OBLIGATION
+};
 using std::string;
 class Instruction
 {
@@ -22,9 +27,12 @@ public:
     virtual void parse(const std::string &value);
     virtual void parse(std::stringstream &stream);
     virtual ~Instruction();
+    INSTRUCTION_TYPE type();
+    void type(INSTRUCTION_TYPE type);
     virtual const string str() = 0;
 
 protected:
+    INSTRUCTION_TYPE type_;
     RESULT_TYPE onResult_;
     string name_;
     std::list<std::vector<std::string>> assignment_;

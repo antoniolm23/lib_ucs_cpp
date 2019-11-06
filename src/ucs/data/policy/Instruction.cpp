@@ -12,6 +12,16 @@ Instruction::Instruction(const string &value)
     log::info("Instruction constructor called with string: {}", value);
     parse(value);
 }
+
+INSTRUCTION_TYPE Instruction::type()
+{
+    return type_;
+}
+void Instruction::type(INSTRUCTION_TYPE type)
+{
+    type_ = type;
+}
+
 RESULT_TYPE Instruction::onResult()
 {
     return onResult_;
